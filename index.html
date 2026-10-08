@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>KKR Patrol Checkpoint</title>
+
+<style>
+
+body {
+
+  background: #10243a;
+
+  color: white;
+
+  font-family: Arial, sans-serif;
+
+  text-align: center;
+
+  padding: 30px 15px;
+
+}
+
+.card {
+
+  background: white;
+
+  color: #10243a;
+
+  border-radius: 20px;
+
+  padding: 30px 15px;
+
+  max-width: 450px;
+
+  margin: auto;
+
+}
+
+h1 { font-size: 25px; }
+
+.location { font-size: 32px; font-weight: bold; }
+
+.date { font-size: 24px; }
+
+.time {
+
+  font-size: 43px;
+
+  font-weight: bold;
+
+  color: green;
+
+}
+
+.label { color: #666; margin-top: 25px; }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>KKR PATROL CHECKPOINT</h1>
+
+<hr>
+
+<p class="label">LOCATION</p>
+
+<div class="location" id="location"></div>
+
+<p class="label">DATE</p>
+
+<div class="date" id="date"></div>
+
+<p class="label">SAUDI ARABIA TIME</p>
+
+<div class="time" id="time"></div>
+
+<p>Take a screenshot and send to WhatsApp</p>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(location.search);
+
+const cp = params.get("cp") || "001";
+
+document.getElementById("location").textContent =
+
+  "Checkpoint " + cp;
+
+ 
+
+function updateClock() {
+
+  const now = new Date();
+
+  const options = {timeZone: "Asia/Riyadh"};
+
+  document.getElementById("date").textContent =
+
+    now.toLocaleDateString("en-GB", {
+
+      ...options, day:"2-digit",
+
+      month:"long", year:"numeric"
+
+    });
+
+  document.getElementById("time").textContent =
+
+    now.toLocaleTimeString("en-US", {
+
+      ...options, hour:"2-digit",
+
+      minute:"2-digit", second:"2-digit",
+
+      hour12:true
+
+    });
+
+}
+
+updateClock();
+
+setInterval(updateClock, 1000);
+
+</script>
+
+</body>
+
+</html>
+
+ 
