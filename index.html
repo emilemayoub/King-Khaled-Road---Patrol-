@@ -12,53 +12,49 @@
 
 <style>
 
+* {box-sizing:border-box}
+
 body {
 
-  background: #10243a;
+margin:0;
 
-  color: white;
+background:#cfe0f4;
 
-  font-family: Arial, sans-serif;
+color:#cfe0f4;
 
-  text-align: center;
+font-family:Arial,sans-serif;
 
-  padding: 30px 15px;
+text-align:center;
+
+padding:24px 12px;
 
 }
 
 .card {
 
-  background: white;
+background:#22242a;
 
-  color: #10243a;
+border-radius:26px;
 
-  border-radius: 20px;
+padding:32px 18px;
 
-  padding: 30px 15px;
+max-width:520px;
 
-  max-width: 450px;
-
-  margin: auto;
+margin:20px auto;
 
 }
 
-h1 { font-size: 25px; }
+h1 {font-size:25px}
 
-.location { font-size: 32px; font-weight: bold; }
+hr {border:0;border-top:1px solid #aaa}
 
-.date { font-size: 24px; }
+.label {color:#aaa;margin-top:35px;font-size:17px}
 
-.time {
+.value {font-size:29px;font-weight:bold;margin:15px 0}
 
-  font-size: 43px;
+#clock {font-size:40px;color:#41d34c;font-weight:bold}
 
-  font-weight: bold;
-
-  color: green;
-
-}
-
-.label { color: #666; margin-top: 25px; }
+.note {font-size:15px;margin-top:25px}
 
 </style>
 
@@ -72,72 +68,184 @@ h1 { font-size: 25px; }
 
 <hr>
 
-<p class="label">LOCATION</p>
+<div class="label">LOCATION</div>
 
-<div class="location" id="location"></div>
+<div class="value" id="location"></div>
 
-<p class="label">DATE</p>
+<div class="label">CHECKPOINT ID</div>
 
-<div class="date" id="date"></div>
+<div class="value" id="checkpoint"></div>
 
-<p class="label">SAUDI ARABIA TIME</p>
+<div class="label">DATE</div>
 
-<div class="time" id="time"></div>
+<div class="value" id="date"></div>
 
-<p>Take a screenshot and send to WhatsApp</p>
+<div class="label">SAUDI ARABIA TIME</div>
+
+<div id="clock"></div>
+
+<div class="note">
+
+Take a screenshot and send to WhatsApp
+
+</div>
 
 </div>
 
 <script>
 
+// EDIT LOCATION NAMES HERE LATER
+
+const locations = {
+
+  "001": "Checkpoint 001",
+
+  "002": "Checkpoint 002",
+
+  "003": "Checkpoint 003",
+
+  "004": "Checkpoint 004",
+
+  "005": "Checkpoint 005",
+
+  "006": "Checkpoint 006",
+
+  "007": "Checkpoint 007",
+
+  "008": "Checkpoint 008",
+
+  "009": "Checkpoint 009",
+
+  "010": "Checkpoint 010",
+
+  "011": "Checkpoint 011",
+
+  "012": "Checkpoint 012",
+
+  "013": "Checkpoint 013",
+
+  "014": "Checkpoint 014",
+
+  "015": "Checkpoint 015",
+
+  "016": "Checkpoint 016",
+
+  "017": "Checkpoint 017",
+
+  "018": "Checkpoint 018",
+
+  "019": "Checkpoint 019",
+
+  "020": "Checkpoint 020",
+
+  "021": "Checkpoint 021",
+
+  "022": "Checkpoint 022",
+
+  "023": "Checkpoint 023",
+
+  "024": "Checkpoint 024",
+
+  "025": "Checkpoint 025",
+
+  "026": "Checkpoint 026",
+
+  "027": "Checkpoint 027",
+
+  "028": "Checkpoint 028",
+
+  "029": "Checkpoint 029",
+
+  "030": "Checkpoint 030",
+
+ "031": "Checkpoint 031",
+
+  "032": "Checkpoint 032",
+
+  "033": "Checkpoint 033",
+
+  "034": "Checkpoint 034",
+
+  "035": "Checkpoint 035",
+
+  "036": "Checkpoint 036",
+
+  "037": "Checkpoint 037",
+
+  "038": "Checkpoint 038",
+
+  "039": "Checkpoint 039",
+
+  "040": "Checkpoint 040",
+
+  "041": "Checkpoint 041",
+
+  "042": "Checkpoint 042",
+
+  "043": "Checkpoint 043",
+
+  "044": "Checkpoint 044",
+
+  "045": "Checkpoint 045"
+
+};
+
+ 
+
 const params = new URLSearchParams(location.search);
 
-const cp = params.get("cp") || "001";
+const id = (params.get("cp") || "001").padStart(3,"0");
+
+ 
+
+document.getElementById("checkpoint").textContent =
+
+locations[id] ? id : "Invalid checkpoint";
+
+ 
 
 document.getElementById("location").textContent =
 
-  "Checkpoint " + cp;
+locations[id] || "Not configured";
 
  
 
 function updateClock() {
 
-  const now = new Date();
+const now = new Date();
 
-  const options = {timeZone: "Asia/Riyadh"};
+const options = {timeZone:"Asia/Riyadh"};
 
-  document.getElementById("date").textContent =
+document.getElementById("date").textContent =
 
-    now.toLocaleDateString("en-GB", {
+new Intl.DateTimeFormat("en-GB",{
 
-      ...options, day:"2-digit",
+...options,day:"2-digit",month:"long",year:"numeric"
 
-      month:"long", year:"numeric"
+}).format(now);
 
-    });
+document.getElementById("clock").textContent =
 
-  document.getElementById("time").textContent =
+new Intl.DateTimeFormat("en-US",{
 
-    now.toLocaleTimeString("en-US", {
+...options,hour:"2-digit",minute:"2-digit",
 
-      ...options, hour:"2-digit",
+second:"2-digit",hour12:true
 
-      minute:"2-digit", second:"2-digit",
-
-      hour12:true
-
-    });
+}).format(now);
 
 }
 
 updateClock();
 
-setInterval(updateClock, 1000);
+setInterval(updateClock,1000);
 
 </script>
 
 </body>
 
 </html>
+
+ 
 
  
